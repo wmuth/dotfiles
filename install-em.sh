@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# ../ is home, avoided ~ intentionally
+# required due to mostly executing through ansible
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # alacritty
-mkdir -p ../.config/alacritty/
-cp ./alacritty.yml ../.config/alacritty/alacritty.yml
+mkdir -p ~/.config/alacritty/
+cp $SCRIPT_DIR/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 # lazygit
 
