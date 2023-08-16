@@ -2,6 +2,18 @@ env:
   # Fix ssh colors
   TERM: xterm-256color
 
+font:
+  normal:
+    family: FuraMono Nerd Font
+    style: Regular
+  bold:
+    family: FuraMono Nerd Font
+    style: Bold
+  italic:
+    family: FuraMono Nerd Font
+    style: Italic
+  size: 10
+
 window:
   # Large dimensions fix startup size
   dimensions:
@@ -14,7 +26,7 @@ window:
 colors:
   primary:
     # darker background
-    # background: '0x001e27'
+    #background: '0x001e27'
     background: '0x002b36'
     foreground: '0x839496'
 
@@ -44,4 +56,4 @@ shell:
   args:
     - -l
     - -c
-    - "tmux attach || tmux"
+    - "zellij"
