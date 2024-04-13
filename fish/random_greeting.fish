@@ -1,3 +1,4 @@
+# A function which greets the user by printing a random greeting from below
 function random_greeting
     set messages \
     "A bomb's a bad choice for close-range combat." \
