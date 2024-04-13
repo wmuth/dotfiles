@@ -1,36 +1,59 @@
 #!/usr/bin/env bash
-# required due to mostly executing through ansible
+# Get script dir
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-# load settings, default all true
-. ./settings.cfg
+# Load settings
+. $SCRIPT_DIR/settings.cfg
 
 if $alacritty; then
-	mkdir -p ~/.config/alacritty/
-	cp $SCRIPT_DIR/alacritty.yml ~/.config/alacritty/alacritty.yml
+	# Overwrite current settings
+	sed -i "/size = /d" $SCRIPT_DIR/alacritty.toml
+	sed -i "/family = /d" $SCRIPT_DIR/alacritty.toml
+	sed -i "/program = /d" $SCRIPT_DIR/alacritty.toml
+	sed -i "/args = /d" $SCRIPT_DIR/alacritty.toml
+
+	# Place new settings
+	sed -i "/\[font\]/a\size = $font_size" $SCRIPT_DIR/alacritty.toml
+	sed -i "/\[font\..*\]/a\family = \"$font_name\"" $SCRIPT_DIR/alacritty.toml
+	sed -i "/\[shell\]/a\program = \"$shell\"" $SCRIPT_DIR/alacritty.toml
+	sed -i "/\[shell\]/a\args = \['-l', '-c', '/home/$USER/.cargo/bin/zellij'\]" $SCRIPT_DIR/alacritty.toml
+
+	# Make sure dir exists and copy file
+	mkdir -p /home/$USER/.config/alacritty/
+	cp $SCRIPT_DIR/alacritty.toml /home/$USER/.config/alacritty/alacritty.toml
+fi
+
+if $fish; then
+	# Make sure path exists
+	mkdir -p /home/$USER/.config/fish/
+
+	# Create tide dir download, fish extract and run
+	mkdir -p /tmp/tide
+	curl https://codeload.github.com/ilancosman/tide/tar.gz/v6 | tar -xzC /tmp/tide
+	/usr/bin/fish -c 'command cp -R /tmp/tide/*/{completions,conf.d,functions} $__fish_config_dir'
+	/usr/bin/fish -C "emit _tide_init_install; exit"
+	rm -rf /tmp/tide
+
+	# Copy files
+	cp $SCRIPT_DIR/fish/random_greeting.fish /home/$USER/.config/fish/functions/random_greeting.fish
+	cp $SCRIPT_DIR/fish/config.fish /home/$USER/.config/fish/config.fish
+fi
+
+if $keyd; then
+	# Check if root
+	if [ "$EUID" -ne 0 ]; then
+		echo "Script does not have root permisison, will need to copy keyd conf"
+
+		# Prepare dir and place file
+		sudo mkdir -p /etc/keyd/
+		sudo cp $SCRIPT_DIR/keyd.conf /etc/keyd/default.conf
+
+	else
+		mkdir -p /etc/keyd/
+		cp $SCRIPT_DIR/keyd.conf /etc/keyd/default.conf
+	fi
 fi
 
 if $nvim; then
-	mkdir -p ~/.config/nvim/
-	rm -rf ~/.config/nvim ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
-	git clone https://github.com/LazyVim/starter ~/.config/nvim
-	rm -rf ~/.config/nvim/.git
-fi
-
-if $tlp; then
-	# this has to be chown root etc, so just move to somewhere user has to see it
-	cp $SCRIPT_DIR/tlp.conf ~/tlp.conf
-fi
-
-if $zsh; then
-	rm -rf ~/.oh-my-zsh/
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
-	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
-	git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-
-	sed -ie 's/plugins=(git)/plugins=(\n    git\n    zsh-autosuggestions\n    zsh-syntax-highlighting\n      )/g' ~/.zshrc
-	sed -ie 's/ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/g' ~/.zshrc
-	cat $SCRIPT_DIR/zshrc.txt >>~/.zshrc
+	echo "TODO"
 fi
