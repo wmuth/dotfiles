@@ -55,5 +55,16 @@ if $keyd; then
 fi
 
 if $nvim; then
-	echo "TODO"
+	# Backup current nvim
+	mv ~/.config/nvim{,.bak}
+	mv ~/.local/share/nvim{,.bak}
+	mv ~/.local/state/nvim{,.bak}
+	mv ~/.cache/nvim{,.bak}
+
+	# Move in new config
+	mkdir -p /home/$USER/.config/nvim/
+	cp $SCRIPT_DIR/nvim.lua /home/$USER/.config/nvim/init.lua
+
+	# Launch for first config
+	nvim
 fi
