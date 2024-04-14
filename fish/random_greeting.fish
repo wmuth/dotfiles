@@ -2,7 +2,7 @@
 function random_greeting
     set messages \
     "A bomb's a bad choice for close-range combat." \
-    "By the way, Denton, stay out of the ladies restroom. That kind of activity embarasses the agency more than it does you." \
+    "By the way, Denton, stay out of the ladies' restroom. That kind of activity embarrasses the agency more than it does you." \
     "Corporations are so big, you don't even know who you're working for. That's terror. Terror built into the system." \
     "Do you ever ask what it's all for? The surveillance, the police, the shoot-on-sight laws? Is that freedom?" \
     "Ever wonder why big car corporations pay two percent tax and the guys on the assembly line pay forty?" \
@@ -11,9 +11,9 @@ function random_greeting
     "How are the drinks here? Great if you like rat piss. Never tried it." \
     "Human beings may not be perfect, but a computer program with language synthesis is hardly the answer to the world's problems." \
     "If there were no god, it would be necessary to invent him." \
-    "I put all my skillpoints into swimming." \
+    "I put all my skill points into swimming." \
     "It's the maintenance man. He knows I like orange!" \
-    "Let's try som  word-association. First word: Ambrosia." \
+    "Let's try some word-association. First word: Ambrosia." \
     "Maybe you should join Majestic 12, in a body bag." \
     "Maybe you should try getting a job?" \
     "My vision is augmented." \
