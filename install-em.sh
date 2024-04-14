@@ -35,8 +35,8 @@ if $fish; then
 	rm -rf /tmp/tide
 
 	# Copy files
-	cp $SCRIPT_DIR/fish/random_greeting.fish /home/$USER/.config/fish/functions/random_greeting.fish
 	cp $SCRIPT_DIR/fish/config.fish /home/$USER/.config/fish/config.fish
+	cp $SCRIPT_DIR/fish/random_greeting.fish /home/$USER/.config/fish/functions/random_greeting.fish
 fi
 
 if $keyd; then
@@ -55,15 +55,22 @@ if $keyd; then
 fi
 
 if $nvim; then
-	# Backup current nvim
-	mv ~/.config/nvim{,.bak}
-	mv ~/.local/share/nvim{,.bak}
-	mv ~/.local/state/nvim{,.bak}
-	mv ~/.cache/nvim{,.bak}
+	# Remove previous backup
+	rm -rf ~/.cache/nvim.bak/
+	rm -rf ~/.config/nvim.bak/
+	rm -rf ~/.local/share/nvim.bak/
+	rm -rf ~/.local/state/nvim.bak/
+
+	# Backup current nvim - ignore if file not exists
+	mv ~/.cache/nvim{,.bak} 2>/dev/null
+	mv ~/.config/nvim{,.bak} 2>/dev/null
+	mv ~/.local/share/nvim{,.bak} 2>/dev/null
+	mv ~/.local/state/nvim{,.bak} 2>/dev/null
 
 	# Move in new config
 	mkdir -p /home/$USER/.config/nvim/
-	cp $SCRIPT_DIR/nvim.lua /home/$USER/.config/nvim/init.lua
+	cp $SCRIPT_DIR/nvim/nvim.lua /home/$USER/.config/nvim/init.lua
+	cp $SCRIPT_DIR/nvim/stylua.toml /home/$USER/.config/nvim/stylua.toml
 
 	# Launch for first config
 	nvim
