@@ -314,15 +314,12 @@ require('lazy').setup {
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          { -- Lots of snippets
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -406,6 +403,9 @@ require('lazy').setup {
       -- Add/delete/replace 'surroundings' (brackets, quotes, etc.)
       require('mini.surround').setup()
 
+      -- Add pairs
+      require('mini.pairs').setup()
+
       -- Simple and easy statusline.
       local statusline = require 'mini.statusline'
       statusline.setup { use_icons = true }
@@ -424,14 +424,16 @@ require('lazy').setup {
         'bash',
         'fish',
         'go',
-        'html',
+        'gomod',
         'lua',
         'luadoc',
         'markdown',
         'ocaml',
         'rust',
+        'toml',
         'vim',
         'vimdoc',
+        'yaml',
       },
       auto_install = true,
       highlight = {
