@@ -64,6 +64,10 @@ vim.keymap.set('n', 'N', 'Nzz', { desc = 'Prev and center' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Down and center' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Up and center' })
 
+-- Change wrapped line movement
+vim.keymap.set('n', 'j', 'gj')
+vim.keymap.set('n', 'k', 'gk')
+
 -- [[ Basic Autocommands ]]
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd('TextYankPost', {
